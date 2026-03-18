@@ -55,7 +55,7 @@ import Data.IORef
 
 import GHC.Exts
 import GHC.IO hiding (finally, onException)
-import GHC.Conc (ThreadId(..))
+import GHC.Conc (ThreadId(..), labelThread)
 
 #if defined(__MHS__)
 import Data.Traversable
@@ -958,7 +958,7 @@ debugLabelMe ::
   IO ()
 debugLabelMe =
 #ifdef DEBUG_AUTO_LABEL
-  myThreadId >>= flip labelThread (GHC.Stack.prettyCallStack callStack)
+  myThreadId >>= flip labelThread (GHC.Stack.prettyCallStack GHC.Stack.callStack)
 #else
   pure ()
 #endif
